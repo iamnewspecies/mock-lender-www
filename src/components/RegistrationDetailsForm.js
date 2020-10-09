@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import { isEmpty } from "lodash";
 
 import { Grid, TextField, Button, Box } from "@material-ui/core";
@@ -8,6 +9,7 @@ const initForm = {
     label: "Company Name",
     name: "name",
     value: "",
+    value: "qwertyuiop",
     error: false,
     validation: /^([a-zA-Z0-9]{5,})$/,
     helperText: "Company Name must be 5 letters or more"
@@ -16,6 +18,7 @@ const initForm = {
     label: "Phone",
     name: "phone",
     value: "",
+    value: "1234567890",
     error: false,
     validation: /^([0-9]{10})$/,
     helperText: "Phone must be 10 letters"
@@ -24,6 +27,7 @@ const initForm = {
     label: "Email",
     name: "email",
     value: "",
+    value: "abc@xyz.coo",
     error: false,
     validation: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     helperText: "Email not valid"
@@ -32,6 +36,7 @@ const initForm = {
     label: "LSP Endpoint",
     name: "baseUrl",
     value: "",
+    value: "https://google.com",
     error: false,
     validation: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i,
     helperText: "Endpoint not valid"
@@ -40,6 +45,7 @@ const initForm = {
     label: "Description",
     name: "description",
     value: "",
+    value: "qwertyuiop",
     error: false,
     validation: /^(.{8,})$/,
     helperText: "Description must be 8 letters or more",
@@ -54,8 +60,14 @@ const makeValuesFromForm = (form) => {
   return values;
 };
 
-const RegistrationDetailsForm = (props) => {
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    width: "100%"
+  }
+}));
 
+const RegistrationDetailsForm = (props) => {
+  const classes = useStyles();
   const { nextCallback } = props;
 
   //
@@ -90,6 +102,8 @@ const RegistrationDetailsForm = (props) => {
       e.error = !e.validation.test(e.value);
     });
     setForm(newForm);
+    const ret = Object.values(newForm).every(e => !isEmpty(e.value) || e.error === false);
+    return ret;
   };
 
   //
@@ -97,6 +111,7 @@ const RegistrationDetailsForm = (props) => {
   //
 
   const onClickLogin = () => {
+    
     if (validateForm()) {
 
       const formDetails = makeValuesFromForm(form);
@@ -131,7 +146,7 @@ const RegistrationDetailsForm = (props) => {
     {formOrder.map((e, i) => (
       <span key={i}>
         <TextField
-          className="w-100"
+          className={classes.textField}
           variant="outlined"
           onChange={formChange}
           onBlur={formBlur}
