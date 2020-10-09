@@ -7,7 +7,7 @@ const initForm = {
   name: {
     label: "Company Name",
     name: "name",
-    value: "qwertyu",
+    value: "",
     error: false,
     validation: /^([a-zA-Z0-9]{5,})$/,
     helperText: "Company Name must be 5 letters or more"
@@ -15,7 +15,7 @@ const initForm = {
   phone: {
     label: "Phone",
     name: "phone",
-    value: "1234567890",
+    value: "",
     error: false,
     validation: /^([0-9]{10})$/,
     helperText: "Phone must be 10 letters"
@@ -23,26 +23,26 @@ const initForm = {
   email: {
     label: "Email",
     name: "email",
-    value: "qwertyu",
+    value: "",
     error: false,
-    validation: /^([a-zA-Z0-9]{5,})$/,
+    validation: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
     helperText: "Email not valid"
   },
   baseUrl: {
     label: "LSP Endpoint",
     name: "baseUrl",
-    value: "qwertyui",
+    value: "",
     error: false,
-    validation: /^([a-zA-Z0-9]{5,})$/,
+    validation: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig,
     helperText: "Endpoint not valid"
   },
   description: {
     label: "Description",
     name: "description",
-    value: "qwertyuiop",
+    value: "",
     error: false,
     validation: /^(.{8,})$/,
-    helperText: "Password must be 8 letters or more",
+    helperText: "Description must be 8 letters or more",
     type: "password"
   }
 };
