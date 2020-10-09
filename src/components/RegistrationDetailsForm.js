@@ -25,7 +25,7 @@ const initForm = {
     name: "email",
     value: "",
     error: false,
-    validation: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
+    validation: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     helperText: "Email not valid"
   },
   baseUrl: {
@@ -33,7 +33,7 @@ const initForm = {
     name: "baseUrl",
     value: "",
     error: false,
-    validation: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig,
+    validation: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i,
     helperText: "Endpoint not valid"
   },
   description: {
@@ -90,7 +90,6 @@ const RegistrationDetailsForm = (props) => {
       e.error = !e.validation.test(e.value);
     });
     setForm(newForm);
-    return Object.values(form).every(v => v.error === false);
   };
 
   //
