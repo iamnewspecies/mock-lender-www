@@ -43,7 +43,6 @@ const initForm = {
     error: false,
     validation: /^(.{8,})$/,
     helperText: "Description must be 8 letters or more",
-    type: "password"
   }
 };
 
