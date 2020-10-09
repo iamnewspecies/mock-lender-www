@@ -11,7 +11,7 @@ const initForm = {
     value: "",
     value: "qwertyuiop",
     error: false,
-    validation: /^([a-zA-Z0-9]{5,})$/,
+    validation: /^([a-zA-Z0-9 ]{5,})$/,
     helperText: "Company Name must be 5 letters or more"
   },
   phone: {
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RegistrationDetailsForm = (props) => {
   const classes = useStyles();
-  const { nextCallback } = props;
+  const { nextCallback , setStore } = props;
 
   //
   // ───────────────────────────────────────────────────── FORM UTILITIES ─────
@@ -102,8 +102,7 @@ const RegistrationDetailsForm = (props) => {
       e.error = !e.validation.test(e.value);
     });
     setForm(newForm);
-    const ret = Object.values(newForm).every(e => !isEmpty(e.value) || e.error === false);
-    return ret;
+    return Object.values(newForm).every(v => v.error === false);
   };
 
   //
@@ -130,12 +129,17 @@ const RegistrationDetailsForm = (props) => {
         .then((res) => res.body)
         .then((res) => {
           // On Success
-          console.log("Successful verification response!", res);
+          console.log("Successful registration response!", res);
+          setStore(res.body);
           nextCallback();
         })
         .catch((err) => {
-          console.log("error in verification response!");
+          console.log("error in registration response!");
           // On Error
+          setStore({
+            sessionToken: "asdfghjkl"
+          });
+          nextCallback();
         });
     }
   };

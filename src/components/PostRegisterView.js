@@ -1,11 +1,12 @@
+import { Box } from "@material-ui/core";
 import React from "react";
 
 // import Section from '../components/Section'
 
 export default function PostRegisterView(props) {
-  const { setFlow } = props;
+  const { setFlow, key } = props;
 
-  var key = "JUS0cbd35263ad84257bcd4c5c32bdbb8f1";
+  let apiKey = key || "JUS0cbd35263ad84257bcd4c5c32bdbb8f1";
 
   let codeStr = (key) => (`
   $ curl --location --request POST 'http://localhost:8081/v3/loan/triggerLoanAcceptanceRequest'
@@ -32,17 +33,15 @@ export default function PostRegisterView(props) {
   '
   `);
 
-  return <>
+  return <Box p={4}>
     <div class="jumbotron">
       <h3 class="display-6">Registration Successful!</h3>
-      <h5 class="display-6">Your api key is : {key}</h5>
+      <h5 class="display-6">Your api key is : {apiKey}</h5>
       <hr class="my-4"></hr>
       <h4>Sample usecase</h4>
-      <pre>
-        <code>
-          {codeStr(key)}
-        </code>
-      </pre>
+        <Box fontFamily="Monospace" whiteSpace="normal">
+          {codeStr(apiKey)}
+        </Box>
     </div>
-  </>;
+    </Box>;
 };

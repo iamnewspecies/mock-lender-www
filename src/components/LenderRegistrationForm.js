@@ -26,16 +26,20 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return ['Registration Details', 'OTP Verification', 'API KEY'];
 }
+let store = {};
+function setStore (st) {
+  store = {...st};
+}
 
 function getStepContent(nextCallback) {
   return function (stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <RegistrationDetailsForm nextCallback={nextCallback} />;
+        return <RegistrationDetailsForm nextCallback={nextCallback} store={store} setStore={setStore} />;
       case 1:
-        return <OTPVerificationForm nextCallback={nextCallback} />;
+        return <OTPVerificationForm nextCallback={nextCallback} store={store} setStore={setStore} />;
       case 2:
-        return <PostRegisterView nextCallback={nextCallback} />;
+        return <PostRegisterView nextCallback={nextCallback} store={store} setStore={setStore} />;
       default:
         return 'Unknown stepIndex';
     }

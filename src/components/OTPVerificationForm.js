@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { isEmpty } from "lodash";
 
+import { makeStyles } from '@material-ui/core/styles';
+
 import { Grid, TextField, Button, Box } from "@material-ui/core";
 
 const initForm = {
@@ -22,9 +24,15 @@ const makeValuesFromForm = (form) => {
   return values;
 };
 
-const OTPVerificationForm = (props) => {
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    width: "100%"
+  }
+}));
 
-  const { nextCallback } = props;
+const OTPVerificationForm = (props) => {
+  const classes = useStyles();
+  const { nextCallback, store, setStore } = props;
 
   //
   // ───────────────────────────────────────────────────── FORM UTILITIES ─────
@@ -58,7 +66,7 @@ const OTPVerificationForm = (props) => {
       e.error = !e.validation.test(e.value);
     });
     setForm(newForm);
-    return Object.values(form).every(v => v.error === false);
+    return Object.values(newForm).every(v => v.error === false);
   };
 
   //
@@ -67,8 +75,32 @@ const OTPVerificationForm = (props) => {
 
   const onClickLogin = () => {
     if (validateForm()) {
-      console.log("GO TO DASHBOARD");
-      nextCallback();
+      const formDetails = makeValuesFromForm(form);
+      formDetails.sessionToken = store.sessionToken;
+      fetch("https://integ-expresscheckout-api.juspay.in/credit/lender/v3/registration/verifyRegistrationRequest", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          DNT: "1",
+        },
+        body: JSON.stringify(formDetails),
+      })
+        .then((res) => res.body)
+        .then((res) => {
+          // On Success
+          console.log("Successful verification response!", res);
+          setStore(res.body);
+          nextCallback();
+        })
+        .catch((err) => {
+          console.log("error in verification response!");
+          setStore({
+            apiKey: "qwertyuiop"
+          });
+          nextCallback();
+          // On Error
+        });
     }
   };
 
@@ -80,7 +112,7 @@ const OTPVerificationForm = (props) => {
     {formOrder.map((e, i) => (
       <span key={i}>
         <TextField
-          className="w-100"
+          className={classes.textField}
           variant="outlined"
           onChange={formChange}
           onBlur={formBlur}
