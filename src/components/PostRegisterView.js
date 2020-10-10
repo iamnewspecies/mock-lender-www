@@ -6,7 +6,7 @@ export default function PostRegisterView(props) {
   const { setFlow } = props;
 
   var key = "JUS0cbd35263ad84257bcd4c5c32bdbb8f1";
-
+// the endpoint here is incorrect
   let codeStr = (key) => (`
   $ curl --location --request POST 'http://localhost:8081/v3/loan/triggerLoanAcceptanceRequest'
   --header 'Content-Type: application/json' 

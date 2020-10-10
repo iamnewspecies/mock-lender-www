@@ -92,12 +92,9 @@ export default function RegisterView(props) {
       };
 
       fetch("https://integ-expresscheckout-api.juspay.in/credit/lender/v3/registration/registrationRequest", {
-        method: "post",
+        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Referer: "http://localhost:8000/",
-          DNT: "1",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(formDetails),
       })
