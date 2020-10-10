@@ -9,6 +9,7 @@ const initForm = {
     name: "name",
     value: "",
     error: false,
+    validation: /^(.)$/,
     helperText: "Please enter company name"
   },
   phone: {
