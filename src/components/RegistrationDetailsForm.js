@@ -9,7 +9,7 @@ const initForm = {
     name: "name",
     value: "",
     error: false,
-    validation: /^(.)$/,
+    validation: /./,
     helperText: "Please enter company name"
   },
   phone: {
@@ -33,7 +33,7 @@ const initForm = {
     name: "baseUrl",
     value: "",
     error: false,
-    validation: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i,
+    validation: /[(http(s)?):\/\/a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i,
     helperText: "Endpoint not valid"
   },
   description: {
@@ -86,10 +86,13 @@ const RegistrationDetailsForm = (props) => {
 
   const validateForm = () => {
     const newForm = { ...form };
+    var isValid = true;
     Object.values(newForm).forEach(e => {
       e.error = !e.validation.test(e.value);
+      isValid = (!e.error) || isValid 
     });
     setForm(newForm);
+    return isValid;
   };
 
   //
@@ -97,13 +100,14 @@ const RegistrationDetailsForm = (props) => {
   //
 
   const onClickLogin = () => {
+    console.log("On click called");
     if (validateForm()) {
 
       const formDetails = makeValuesFromForm(form);
 
       // console.log("FORM ---->", formDetails);
 
-      fetch("https://integ-expresscheckout-api.juspay.in/credit/lender/v3/registration/registrationRequest", {
+      fetch("http://localhost:8081/v3/registration/registrationRequest", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -122,6 +126,8 @@ const RegistrationDetailsForm = (props) => {
           console.log("error in verification response!");
           // On Error
         });
+    } else {
+      console.log("On click else");
     }
   };
 
