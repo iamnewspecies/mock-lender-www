@@ -107,7 +107,7 @@ const RegistrationDetailsForm = (props) => {
 
       // console.log("FORM ---->", formDetails);
 
-      fetch("http://localhost:8081/v3/registration/registrationRequest", {
+      fetch("https://integ-expresscheckout-api.juspay.in/credit/lender/v3/registration/registrationRequest", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
